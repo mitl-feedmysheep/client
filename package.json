@@ -21,6 +21,8 @@
     "react-native-safearea-height": "^1.0.7",
     "react-native-screens": "^3.29.0",
     "react-native-splash-screen": "^3.3.0",
+    "react-native-svg": "^15.7.1",
+    "react-native-svg-transformer": "^1.5.0",
     "react-native-toast-message": "^2.2.0"
   },
   "devDependencies": {
@@ -31,7 +33,7 @@
     "@react-native/eslint-config": "0.74.83",
     "@react-native/metro-config": "0.74.83",
     "@react-native/typescript-config": "0.74.83",
-    "@types/react": "^18.3.10",
+    "@types/react": "^18.2.37",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.6.3",
     "eslint": "^8.19.0",
