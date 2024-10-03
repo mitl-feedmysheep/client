@@ -27,7 +27,7 @@ module.exports = {
           '@constants': './src/constants',
           '@hooks': './src/hooks',
           '@screens': './src/screens',
-          '@types': './src/types',
+          '@stack-types': './src/stack-types',
           '@utils': './src/utils',
         },
       },

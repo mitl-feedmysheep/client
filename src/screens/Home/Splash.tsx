@@ -5,8 +5,10 @@ import { ACCESS_TOKEN } from '@constants/storageKeys';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { getAsyncStorage } from '@utils/utils';
 import React, { useEffect } from 'react';
-import { RootStackParamList } from '../../types/screenStackParams';
-type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
+import { styled } from 'styled-components/native';
+import { RootStackParamList } from '../../stack-types/screenStackParams';
+
+type Props = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 
 const SplashScreen: React.FC<Props> = ({ navigation }) => {
   useEffect(() => {

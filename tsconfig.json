@@ -7,7 +7,7 @@
       "@constants/*": ["constants/*"],
       "@hooks/*": ["hooks/*"],
       "@screens/*": ["screens/*"],
-      "@types/*": ["types/*"],
+      "@stack-types/*": ["stack-types/*"],
       "@utils/*": ["utils/*"]
     }
   },
