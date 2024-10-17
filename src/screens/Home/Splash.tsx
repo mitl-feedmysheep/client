@@ -3,14 +3,14 @@ import LogoSvg from '@assets/splash/logo.svg';
 import { colorSet } from '@constants/colorSet';
 import { ACCESS_TOKEN } from '@constants/storageKeys';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@stack-types/screenStackParams';
 import { getAsyncStorage } from '@utils/utils';
 import React, { useEffect } from 'react';
 import { styled } from 'styled-components/native';
-import { RootStackParamList } from '../../stack-types/screenStackParams';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 
-const SplashScreen: React.FC<Props> = ({ navigation }) => {
+export const SplashScreen: React.FC<Props> = ({ navigation }) => {
   useEffect(() => {
     setTimeout(async () => {
       const accessToken = await getAsyncStorage(ACCESS_TOKEN);
@@ -50,5 +50,3 @@ const BibleText = styled.Text`
   line-height: 19px;
   letter-spacing: 0.3px;
 `;
-
-export default SplashScreen;
