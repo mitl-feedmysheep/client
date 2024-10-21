@@ -1,5 +1,7 @@
+import { signIn } from '@apis/mutations/login';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@stack-types/screenStackParams';
+
 import { useMemo, useState } from 'react';
 import { Text } from 'react-native';
 import styled from 'styled-components/native';
@@ -13,6 +15,13 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
     () => Boolean(email.length && password.length),
     [email, password],
   );
+
+  const handleLogin = async () => {
+    const response = await signIn(email, password);
+    if (response) {
+      navigation.navigate('Home');
+    }
+  };
 
   return (
     <Container>

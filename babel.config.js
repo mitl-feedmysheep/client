@@ -29,6 +29,7 @@ module.exports = {
           '@screens': './src/screens',
           '@stack-types': './src/stack-types',
           '@utils': './src/utils',
+          '@apis': './src/apis',
         },
       },
     ],
