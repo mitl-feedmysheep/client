@@ -15,6 +15,7 @@ export const Header: React.FC<Props> = ({
   onPressLeftButton,
 }) => {
   const navigation = useNavigation();
+
   return (
     <Container>
       {isLeftButton && (
@@ -32,7 +33,6 @@ export const Header: React.FC<Props> = ({
 };
 
 const Container = styled.View`
-  display: flex;
   flex-direction: row;
   height: 42px;
   width: 100%;

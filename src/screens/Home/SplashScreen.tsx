@@ -2,6 +2,7 @@ import AppNameSvg from '@assets/splash/app-name.svg';
 import LogoSvg from '@assets/splash/logo.svg';
 import { colorSet } from '@constants/colorSet';
 import { ACCESS_TOKEN } from '@constants/storageKeys';
+import { isEmpty } from '@fxts/core';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@stack-types/screenStackParams';
 import { getAsyncStorage } from '@utils/utils';
@@ -15,7 +16,11 @@ export const SplashScreen: React.FC<Props> = ({ navigation }) => {
     setTimeout(async () => {
       const accessToken = await getAsyncStorage(ACCESS_TOKEN);
 
-      navigation.replace('Login');
+      if (isEmpty(accessToken)) {
+        navigation.replace('Login');
+      } else {
+        navigation.replace('Home');
+      }
     }, 2000);
   }, []);
 
@@ -31,7 +36,6 @@ export const SplashScreen: React.FC<Props> = ({ navigation }) => {
 };
 
 const Container = styled.View`
-  display: flex;
   flex: 1;
   align-items: center;
   justify-content: center;
@@ -39,7 +43,6 @@ const Container = styled.View`
 `;
 
 const BibleText = styled.Text`
-  display: flex;
   margin-top: 24px;
   font-family: Pretendard-Regular;
   color: ${colorSet.neutral.N5};

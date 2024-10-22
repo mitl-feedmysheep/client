@@ -98,24 +98,20 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
 };
 
 const Container = styled.SafeAreaView`
-  display: flex;
   flex: 1;
   background-color: white;
 `;
 
 const AvoidingView = styled.ScrollView`
-  display: flex;
   flex: 1;
 `;
 
 const InnerContainer = styled.View`
-  display: flex;
   margin-horizontal: 24px;
   flex: 1;
 `;
 
 const SignupContainer = styled.SafeAreaView`
-  display: flex;
   flex: 1;
   flex-direction: row;
   align-items: center;
@@ -158,7 +154,6 @@ const BibleText = styled(Typo)`
 `;
 
 const SearchContainer = styled.View`
-  display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
