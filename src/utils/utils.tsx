@@ -1,19 +1,8 @@
 import { isEmpty } from '@fxts/core';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getStatusBarHeight } from 'react-native-safearea-height';
-import Toast from 'react-native-toast-message';
 
 export const sleep = async (ms: number): Promise<void> => {
   new Promise(resolve => setTimeout(resolve, ms));
-};
-
-export const showToast = (text: string, type: string): void => {
-  Toast.show({
-    type,
-    props: { text },
-    position: 'top',
-    topOffset: getStatusBarHeight() + 41,
-  });
 };
 
 export const getAsyncStorage = async (key: string): Promise<string | null> => {
@@ -52,4 +41,10 @@ const safeJsonParse = (str: string | null): any => {
   } catch (e) {
     return str; // Return the original string if parsing fails
   }
+};
+
+export const validateEmail = (value: string): boolean => {
+  var re =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\\.,;:\s@"]+\.)+[^<>()[\]\\.,;:\s@"]{2,})$/i;
+  return re.test(String(value).toLowerCase());
 };

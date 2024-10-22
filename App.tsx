@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { LoginScreen } from '@screens/Home/Login';
-import { SplashScreen } from '@screens/Home/Splash';
+import { LoginScreen } from '@screens/Home/LoginScreen';
+import { SplashScreen } from '@screens/Home/SplashScreen';
 import { RootStackParamList } from '@stack-types/screenStackParams';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';

@@ -10,7 +10,7 @@ import axios, {
 import { BASE_URL } from './apiPath';
 import { useReissueAccessTokenMutation } from './mutations/reissueAccessToken';
 
-type CommonResponse<T> = {
+export type CommonResponse<T> = {
   common: {
     status: API_STATUS;
     message: string;
@@ -18,7 +18,7 @@ type CommonResponse<T> = {
   data: T;
 };
 
-const printAPILog = async (type: LOGGABLE, message: any): Promise<void> => {
+const printLog = async (type: LOGGABLE, message: any): Promise<void> => {
   const loggable = ['local', 'development'];
   const { method, url } = message;
 
@@ -58,7 +58,7 @@ const onRequest = async (
 ): Promise<InternalAxiosRequestConfig> => {
   const { method, url } = config;
 
-  await printAPILog(LOGGABLE.REQUEST, { method, url });
+  await printLog(LOGGABLE.REQUEST, { method, url });
 
   const accessToken = await getAsyncStorage(ACCESS_TOKEN);
 
@@ -72,7 +72,7 @@ const onResponse = async (res: AxiosResponse): Promise<AxiosResponse> => {
   const { method, url } = originalRequest;
   const { common } = res.data.data;
 
-  await printAPILog(LOGGABLE.RESPONSE, { method, url, common });
+  await printLog(LOGGABLE.RESPONSE, { method, url, common });
 
   /** 토큰 재발급 및 재요청 */
   if (common.status === API_STATUS.INVALID_TOKEN) {
@@ -110,7 +110,12 @@ const onError = async (error: AxiosError | Error): Promise<AxiosError> => {
     const { method, url } = error.config as InternalAxiosRequestConfig;
     if (error.response) {
       const { status, message } = error.response.data;
-      await printAPILog(LOGGABLE.ERROR, { method, url, status, message });
+      await printLog(LOGGABLE.ERROR, {
+        method,
+        url,
+        status,
+        message,
+      });
     }
   }
 
@@ -129,41 +134,41 @@ axiosInstance.interceptors.response.use(onResponse, onError);
 export const getAPI = async <T,>(
   url: string,
   config?: AxiosRequestConfig,
-): Promise<T> => {
+): Promise<CommonResponse<T>> => {
   const response = await axiosInstance.get<CommonResponse<T>>(url, config);
-  return response.data.data;
+  return response.data;
 };
 
 export const postAPI = async <T,>(
   url: string,
   data?: any,
   config?: AxiosRequestConfig,
-): Promise<T> => {
+): Promise<CommonResponse<T>> => {
   const response = await axiosInstance.post<CommonResponse<T>>(
     url,
     data,
     config,
   );
-  return response.data.data;
+  return response.data;
 };
 
 export const putAPI = async <T,>(
   url: string,
   data?: any,
   config?: AxiosRequestConfig,
-): Promise<T> => {
+): Promise<CommonResponse<T>> => {
   const response = await axiosInstance.put<CommonResponse<T>>(
     url,
     data,
     config,
   );
-  return response.data.data;
+  return response.data;
 };
 
 export const deleteAPI = async <T,>(
   url: string,
   config?: AxiosRequestConfig,
-): Promise<T> => {
+): Promise<CommonResponse<T>> => {
   const response = await axiosInstance.delete<CommonResponse<T>>(url, config);
-  return response.data.data;
+  return response.data;
 };
