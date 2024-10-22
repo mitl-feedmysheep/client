@@ -1,7 +1,6 @@
 import { API_STATUS, LOGGABLE } from '@constants/enum';
-import { ACCESS_TOKEN } from '@constants/storageKeys';
-import { isEmpty } from '@fxts/core';
-import { getAsyncStorage } from '@utils/utils';
+import { ACCESS_TOKEN, FMS_TOKEN, REFRESH_TOKEN } from '@constants/storageKeys';
+import { getAsyncStorage, setAsyncStorage } from '@utils/utils';
 import axios, {
   AxiosError,
   AxiosRequestConfig,
@@ -9,10 +8,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from 'axios';
 import { BASE_URL } from './apiPath';
-
-export const getAccessToken = async () => {
-  return await getAsyncStorage(ACCESS_TOKEN);
-};
+import { useReissueAccessTokenMutation } from './mutations/reissueAccessToken';
 
 type CommonResponse<T> = {
   common: {
@@ -22,7 +18,7 @@ type CommonResponse<T> = {
   data: T;
 };
 
-const printAPILog = (type: LOGGABLE, message: any) => {
+const printAPILog = async (type: LOGGABLE, message: any): Promise<void> => {
   const loggable = ['local', 'development'];
   const { method, url } = message;
 
@@ -33,10 +29,12 @@ const printAPILog = (type: LOGGABLE, message: any) => {
         break;
       case LOGGABLE.RESPONSE:
         const { common } = message;
-
         if (common.status === API_STATUS.SUCCESS) {
           console.log(`🛬 [API - RESPONSE] ${method?.toUpperCase()} ${url}`);
-        } else if (common.status === API_STATUS.FAIL) {
+        } else if (
+          common.status === API_STATUS.FAIL ||
+          common.status === API_STATUS.INVALID_TOKEN
+        ) {
           const { message: errorMessage } = common;
           console.log(
             `🚨 [API - 🙋‍♂️ ERROR] ${method?.toUpperCase()} ${url} --> ${errorMessage}`,
@@ -60,34 +58,59 @@ const onRequest = async (
 ): Promise<InternalAxiosRequestConfig> => {
   const { method, url } = config;
 
-  printAPILog(LOGGABLE.REQUEST, { method, url });
+  await printAPILog(LOGGABLE.REQUEST, { method, url });
 
   const accessToken = await getAsyncStorage(ACCESS_TOKEN);
 
-  // TODO: accessToken 만료시, refreshToken을 통해 재발급하는 로직 추가
-  if (isEmpty(accessToken)) {
-  }
-
-  config.headers['fms-token'] = accessToken;
+  config.headers[FMS_TOKEN] = accessToken;
 
   return config;
 };
 
-const onResponse = (res: AxiosResponse): AxiosResponse => {
-  const { method, url } = res.config;
+const onResponse = async (res: AxiosResponse): Promise<AxiosResponse> => {
+  const originalRequest = res.config;
+  const { method, url } = originalRequest;
   const { common } = res.data.data;
 
-  printAPILog(LOGGABLE.RESPONSE, { method, url, common });
+  await printAPILog(LOGGABLE.RESPONSE, { method, url, common });
+
+  /** 토큰 재발급 및 재요청 */
+  if (common.status === API_STATUS.INVALID_TOKEN) {
+    const refreshToken = await getAsyncStorage(REFRESH_TOKEN);
+
+    useReissueAccessTokenMutation().mutate(
+      {
+        refreshToken: refreshToken as string,
+      },
+      {
+        onSuccess: async data => {
+          const { accessToken, refreshToken } = data;
+
+          await setAsyncStorage(ACCESS_TOKEN, accessToken);
+          await setAsyncStorage(REFRESH_TOKEN, refreshToken);
+
+          // 이거 해줘야 하나? 위에서 onRequest 때 안 걸리려나?
+          originalRequest.headers[FMS_TOKEN] = accessToken;
+        },
+        onError: error => {
+          // TODO: 토스트 + 로그인 화면으로 보내기
+          console.error('토큰 재발급 실패', error);
+        },
+      },
+    );
+
+    return axiosInstance(originalRequest);
+  }
 
   return res;
 };
 
-const onError = (error: AxiosError | Error): Promise<AxiosError> => {
+const onError = async (error: AxiosError | Error): Promise<AxiosError> => {
   if (axios.isAxiosError(error)) {
     const { method, url } = error.config as InternalAxiosRequestConfig;
     if (error.response) {
       const { status, message } = error.response.data;
-      printAPILog(LOGGABLE.ERROR, { method, url, status, message });
+      await printAPILog(LOGGABLE.ERROR, { method, url, status, message });
     }
   }
 
@@ -106,16 +129,41 @@ axiosInstance.interceptors.response.use(onResponse, onError);
 export const getAPI = async <T,>(
   url: string,
   config?: AxiosRequestConfig,
-): Promise<AxiosResponse<CommonResponse<T>>> => {
-  const response = await axiosInstance.get(url, config);
-  return response.data;
+): Promise<T> => {
+  const response = await axiosInstance.get<CommonResponse<T>>(url, config);
+  return response.data.data;
 };
 
 export const postAPI = async <T,>(
   url: string,
   data?: any,
   config?: AxiosRequestConfig,
-): Promise<AxiosResponse<CommonResponse<T>>> => {
-  const response = await axiosInstance.post(url, data, config);
-  return response.data;
+): Promise<T> => {
+  const response = await axiosInstance.post<CommonResponse<T>>(
+    url,
+    data,
+    config,
+  );
+  return response.data.data;
+};
+
+export const putAPI = async <T,>(
+  url: string,
+  data?: any,
+  config?: AxiosRequestConfig,
+): Promise<T> => {
+  const response = await axiosInstance.put<CommonResponse<T>>(
+    url,
+    data,
+    config,
+  );
+  return response.data.data;
+};
+
+export const deleteAPI = async <T,>(
+  url: string,
+  config?: AxiosRequestConfig,
+): Promise<T> => {
+  const response = await axiosInstance.delete<CommonResponse<T>>(url, config);
+  return response.data.data;
 };

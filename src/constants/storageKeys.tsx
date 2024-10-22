@@ -1,4 +1,3 @@
-const ACCESS_TOKEN = "accessToken";
-const REFRESH_TOKEN = "refreshToken";
-
-export { ACCESS_TOKEN, REFRESH_TOKEN };
+export const ACCESS_TOKEN = 'accessToken';
+export const REFRESH_TOKEN = 'refreshToken';
+export const FMS_TOKEN = 'fms-token';

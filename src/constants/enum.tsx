@@ -5,6 +5,7 @@ export enum LOGGABLE {
 }
 
 export enum API_STATUS {
-  SUCCESS = 'SUCCESS',
-  FAIL = 'FAIL',
+  SUCCESS = 'success',
+  FAIL = 'fail',
+  INVALID_TOKEN = 'invalidToken',
 }
