@@ -1,4 +1,5 @@
 import { useSignInMutation } from '@apis/mutations/login';
+import LogoSvg from '@assets/splash/logo.svg';
 import { MainButton } from '@components/buttons/MainButton';
 import { EmptyArea } from '@components/common/EmptyArea';
 import { Header } from '@components/common/Header';
@@ -42,6 +43,7 @@ export const LoginScreen: React.FC<Props> = ({ navigation }) => {
       <AvoidingView stickyHeaderIndices={[0]}>
         <Header title="로그인" />
         <InnerContainer>
+          <LogoSvg />
           <EmptyArea height={170} />
           <CustomTextInput
             value={email}

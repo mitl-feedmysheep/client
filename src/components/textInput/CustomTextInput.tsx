@@ -24,7 +24,6 @@ export const CustomTextInput = ({
   const [isFocused, setIsFocused] = useState(false);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [valid, setValid] = useState(true);
-  // const inputRef = useRef(null);
 
   useEffect(() => {
     console.log('valid>>>', valid);
@@ -38,7 +37,7 @@ export const CustomTextInput = ({
     setIsFocused(false);
   };
 
-  const handleEmailChange = (text: string) => {
+  const handleTextChange = (text: string) => {
     if (onChangeText) onChangeText(text);
     if (validate) setValid(validate(text));
   };
@@ -48,7 +47,7 @@ export const CustomTextInput = ({
       <TextInputContainer>
         <TextInput
           value={value}
-          onChangeText={handleEmailChange}
+          onChangeText={handleTextChange}
           scrollEnabled={false}
           editable={editable}
           placeholder={placeholder}
@@ -73,7 +72,6 @@ export const CustomTextInput = ({
 };
 
 const Container = styled.SafeAreaView`
-  display: flex;
   flex-direction: column;
 `;
 
@@ -83,7 +81,6 @@ const TextInputContainer = styled.View`
 `;
 
 const TextInput = styled.TextInput<{ valid: boolean }>`
-  display: flex;
   flex: 1;
   padding: 16px;
   border-radius: 8px;
@@ -98,7 +95,6 @@ const TextInput = styled.TextInput<{ valid: boolean }>`
 `;
 
 const ViewPasswordButton = styled.TouchableOpacity`
-  display: flex;
   position: absolute;
   align-items: center;
   justify-content: center;
