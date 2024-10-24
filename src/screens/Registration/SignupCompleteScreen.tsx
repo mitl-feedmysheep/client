@@ -1,13 +1,13 @@
-import React from "react";
-import { styled } from "styled-components/native";
-import { EmptyArea, Typo } from "../components/common";
-import { RoundButton } from "../components/buttons";
-import AppNameSvg from "../assets/splash/app-name.svg";
-import CongratsSvg from "../assets/images/congrats.svg";
+import React from 'react';
+import { styled } from 'styled-components/native';
+import CongratsSvg from '../assets/images/congrats.svg';
+import AppNameSvg from '../assets/splash/app-name.svg';
+import { RoundButton } from '../components/buttons';
+import { EmptyArea, Typo } from '../components/common';
 
 type Props = {};
 
-const SignupCompleteScreen: React.FC<Props> = ({ navigation }) => {
+export const SignupCompleteScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <Container>
       <AvoidingView>
@@ -24,7 +24,7 @@ const SignupCompleteScreen: React.FC<Props> = ({ navigation }) => {
         <ButtonContainer>
           <RoundButton
             onPress={() => {
-              navigation.replace("ChurchRegistration");
+              navigation.replace('ChurchRegistration');
             }}
             buttonText="교회 등록하기"
             isActived={true}
@@ -55,5 +55,3 @@ const InnnerContainer = styled.View`
 const ButtonContainer = styled.View`
   margin-horizontal: 24px;
 `;
-
-export default SignupCompleteScreen;

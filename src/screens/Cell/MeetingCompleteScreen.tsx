@@ -1,13 +1,16 @@
-import React from "react";
-import { styled } from "styled-components/native";
-import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../types/common";
-import { MainButton } from "../../components/buttons";
-import { EmptyArea } from "../../components/common";
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React from 'react';
+import { styled } from 'styled-components/native';
+import { MainButton } from '../../components/buttons';
+import { EmptyArea } from '../../components/common';
+import { RootStackParamList } from '../../types/common';
 
-type Props = NativeStackScreenProps<RootStackParamList, "MeetingComplete">;
+type Props = NativeStackScreenProps<RootStackParamList, 'MeetingComplete'>;
 
-const MeetingCompleteScreen: React.FC<Props> = ({ navigation, route }) => {
+export const MeetingCompleteScreen: React.FC<Props> = ({
+  navigation,
+  route,
+}) => {
   return (
     <Container>
       <BodyContainer>
@@ -111,5 +114,3 @@ const DescriptionBoldText = styled.Text`
   font-weight: 800;
   line-height: normal;
 `;
-
-export default MeetingCompleteScreen;
