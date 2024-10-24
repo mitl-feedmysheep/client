@@ -1,32 +1,33 @@
-import React, { useState } from "react";
-import { styled } from "styled-components/native";
-import RadioGroup from "react-native-radio-buttons-group";
-import { Typo } from "../common";
-import { colorSet } from "../../constants";
-import { SmallRoundButton } from "../buttons";
+import React, { useState } from 'react';
+import { styled } from 'styled-components/native';
+import { colorSet } from '../../constants';
+import { SmallRoundButton } from '../buttons';
+import { Typo } from '../common';
 
 type Props = {
   dataList: Array<any>;
   onPressSelection: () => {};
 };
 
-const CheckSelectionList: React.FC<Props> = ({
+export const CheckSelectionList: React.FC<Props> = ({
   dataList,
   onPressSelection,
 }) => {
   const [newDataList, setNewDataList] = useState(
     dataList.map((item, index) =>
-      index === 0 ? { ...item, isChecked: true } : { ...item, isChecked: false }
-    )
+      index === 0
+        ? { ...item, isChecked: true }
+        : { ...item, isChecked: false },
+    ),
   );
 
-  const onPressRadioButton = (idx) => {
+  const onPressRadioButton = idx => {
     setNewDataList(
-      newDataList.map((item) =>
+      newDataList.map(item =>
         item.idx === idx
           ? { ...item, isChecked: true }
-          : { ...item, isChecked: false }
-      )
+          : { ...item, isChecked: false },
+      ),
     );
   };
   const CheckItem = ({ item, onPressRadioButton }) => {
@@ -37,8 +38,7 @@ const CheckSelectionList: React.FC<Props> = ({
           <CheckBox
             onPress={() => onPressRadioButton(idx)}
             activeOpacity={1}
-            isChecked={isChecked}
-          >
+            isChecked={isChecked}>
             {isChecked && <Dot />}
           </CheckBox>
         </CheckBoxContainer>
@@ -55,7 +55,7 @@ const CheckSelectionList: React.FC<Props> = ({
         {isChecked && (
           <SmallRoundButton
             onPress={() =>
-              onPressSelection(dataList.find((item) => item.idx === idx))
+              onPressSelection(dataList.find(item => item.idx === idx))
             }
             buttonText="선택"
             buttonType="filled"
@@ -119,5 +119,3 @@ const Divider = styled.View`
   height: ${({ height }) => (height ? height : 0.75)};
   background-color: ${({ color }) => (color ? color : colorSet.neutral.N4)};
 `;
-
-export default CheckSelectionList;

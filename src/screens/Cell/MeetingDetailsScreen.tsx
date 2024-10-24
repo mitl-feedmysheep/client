@@ -12,6 +12,11 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { styled } from 'styled-components/native';
 dayjs.locale('ko'); // 한국 지역 설정
 
+import { MainButton } from '@components/buttons/MainButton';
+import { EmptyArea } from '@components/common/EmptyArea';
+import { Header } from '@components/common/Header';
+import { delay } from '@fxts/core';
+import { RootStackParamList } from '@stack-types/screenStackParams';
 import CalenderIcon from '../../assets/icon/ic_calendar_line.svg';
 import CloseCircle from '../../assets/icon/ic_close_circle_fill.svg';
 import DeleteIcon from '../../assets/icon/ic_delete_bin_line.svg';
@@ -20,14 +25,7 @@ import MapIcon from '../../assets/icon/ic_map_line.svg';
 import StarIcon from '../../assets/icon/ic_star_line.svg';
 import TimeIcon from '../../assets/icon/ic_time_line.svg';
 import DashedLine from '../../assets/lines/dashed_line.svg';
-import { MainButton } from '../../components/buttons';
-import { EmptyArea, Header } from '../../components/common';
 import { CellMemberCard } from '../../components/items';
-import {
-  MeetingDetailsScreenStep,
-  RootStackParamList,
-} from '../../types/common';
-import { delay } from '../../utils/utils';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'MeetingDetails'>;
 

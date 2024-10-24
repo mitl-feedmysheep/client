@@ -1,9 +1,10 @@
+import CongratsSvg from '@assets/images/congrats.svg';
+import AppNameSvg from '@assets/splash/app-name.svg';
+import { RoundButton } from '@components/buttons/RoundButton';
+import { EmptyArea } from '@components/common/EmptyArea';
+import Typo from '@components/common/Typo';
 import React from 'react';
 import { styled } from 'styled-components/native';
-import CongratsSvg from '../assets/images/congrats.svg';
-import AppNameSvg from '../assets/splash/app-name.svg';
-import { RoundButton } from '../components/buttons';
-import { EmptyArea, Typo } from '../components/common';
 
 type Props = {};
 

@@ -1,9 +1,9 @@
+import { MainButton } from '@components/buttons/MainButton';
+import { EmptyArea } from '@components/common/EmptyArea';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@stack-types/screenStackParams';
 import React from 'react';
 import { styled } from 'styled-components/native';
-import { MainButton } from '../../components/buttons';
-import { EmptyArea } from '../../components/common';
-import { RootStackParamList } from '../../types/common';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'MeetingComplete'>;
 

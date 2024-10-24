@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
-import { styled } from "styled-components/native";
-import { CheckBox, CheckBoxWithLabel, EmptyArea, Profile } from "../common";
-import DashedLine from "../../assets/lines/dashed_line.svg";
-import AddIcon from "../../assets/icon/ic_add_line.svg";
-import CloseCircle from "../../assets/icon/ic_close_circle_fill.svg";
-import dayjs from "dayjs";
-import "dayjs/locale/ko"; // 한국 지역 불러오기
-import { MainButton } from "../buttons";
-import { Keyboard, TextInputProps } from "react-native";
-dayjs.locale("ko"); // 한국 지역 설정
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko'; // 한국 지역 불러오기
+import React, { useEffect, useRef, useState } from 'react';
+import { TextInputProps } from 'react-native';
+import { styled } from 'styled-components/native';
+import AddIcon from '../../assets/icon/ic_add_line.svg';
+import CloseCircle from '../../assets/icon/ic_close_circle_fill.svg';
+import DashedLine from '../../assets/lines/dashed_line.svg';
+import { MainButton } from '../buttons';
+import { CheckBoxWithLabel, EmptyArea, Profile } from '../common';
+dayjs.locale('ko'); // 한국 지역 설정
 
 interface OnSaveProps {
   callbackSuccess: () => void;
@@ -30,15 +30,15 @@ interface Props {
   readonly?: boolean;
 }
 
-const CellMemberCard: React.FC<Props> = ({
+export const CellMemberCard: React.FC<Props> = ({
   name,
   date,
   worship = false,
   meeting = false,
   setWorship = () => {},
   setMeeting = () => {},
-  meetingText = "",
-  prayerList = [""],
+  meetingText = '',
+  prayerList = [''],
   setMeetingText = () => {},
   setPrayerText = () => {},
   addPrayer = () => {},
@@ -72,7 +72,7 @@ const CellMemberCard: React.FC<Props> = ({
             <EmptyArea height={2} />
             {date && (
               <MeetingDateText>
-                {dayjs(date).format("YYYY.MM.DD")}
+                {dayjs(date).format('YYYY.MM.DD')}
               </MeetingDateText>
             )}
           </TextContainer>
@@ -100,7 +100,7 @@ const CellMemberCard: React.FC<Props> = ({
           <EmptyArea height={8} />
           <MeetingTextInput
             value={meetingText}
-            onChangeText={(text) => {
+            onChangeText={text => {
               setIsEdited(true);
               setMeetingText(text);
             }}
@@ -119,8 +119,7 @@ const CellMemberCard: React.FC<Props> = ({
                   setIsEdited(true);
                   addPrayer();
                 }}
-                activeOpacity={1}
-              >
+                activeOpacity={1}>
                 <AddIcon />
               </AddIconButton>
             )}
@@ -130,7 +129,7 @@ const CellMemberCard: React.FC<Props> = ({
             {prayerList?.map((prayer, index) => (
               <MeetingTextInput
                 value={prayer}
-                onChangeText={(text) => {
+                onChangeText={text => {
                   setIsEdited(true);
                   setPrayerText(text, index);
                 }}
@@ -194,10 +193,9 @@ const MeetingTextInput = ({
       {value && value.length > 0 && isFocused && (
         <CloseCircleButton
           onPress={() => {
-            if (onChangeText) onChangeText("");
+            if (onChangeText) onChangeText('');
           }}
-          activeOpacity={1}
-        >
+          activeOpacity={1}>
           <CloseCircle />
         </CloseCircleButton>
       )}
@@ -305,5 +303,3 @@ const TextInputContainer = styled.View`
   flex-direction: row;
   position: relative;
 `;
-
-export default CellMemberCard;

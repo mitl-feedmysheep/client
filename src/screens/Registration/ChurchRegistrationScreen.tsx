@@ -4,16 +4,12 @@ import { getStatusBarHeight } from 'react-native-safearea-height';
 import Toast from 'react-native-toast-message';
 import { styled } from 'styled-components/native';
 
-import { RoundButton, SmallRoundButton } from '../components/buttons';
-import { EmptyArea, Header } from '../components/common';
-import { CheckSelectionList } from '../components/list';
-import { TextInputWithTitle } from '../components/text_input';
-import {
-  getChurchBodiesQueryKey,
-  getChurchesQueryKey,
-  signInQueryKey,
-} from '../constants/apiQueryKeys';
-import { getChurchBodies, getChurches, signIn } from '../utils/apis';
+import { RoundButton } from '@components/buttons/RoundButton';
+import { SmallRoundButton } from '@components/buttons/SmallRoundButton';
+import { EmptyArea } from '@components/common/EmptyArea';
+import { Header } from '@components/common/Header';
+import { CheckSelectionList } from '@components/list/CheckSelectionList';
+import { TextInputWithTitle } from '@components/textInput/TextInputWithTitle';
 
 type Props = {};
 

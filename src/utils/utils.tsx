@@ -1,10 +1,6 @@
 import { isEmpty } from '@fxts/core';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const sleep = async (ms: number): Promise<void> => {
-  new Promise(resolve => setTimeout(resolve, ms));
-};
-
 export const getAsyncStorage = async (key: string): Promise<string | null> => {
   try {
     const data = await AsyncStorage.getItem(key);

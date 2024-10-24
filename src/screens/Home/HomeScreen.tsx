@@ -1,3 +1,5 @@
+import EventElement from '@components/home/EventElement';
+import MyGroupElement from '@components/home/MyGroupElement';
 import { useQueries, useQuery } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import { styled } from 'styled-components/native';
@@ -6,17 +8,6 @@ import EllipseSvg from '../assets/home/ellipse.svg';
 import LogoSvg from '../assets/home/logo.svg';
 import MyPageSvg from '../assets/home/my-page.svg';
 import WhiteEllipseSvg from '../assets/home/white-ellipse.svg';
-import EventElement from '../components/home/EventElement';
-import MyGroupElement from '../components/home/MyGroupElement';
-import {
-  getAppMediaList,
-  getAppText,
-  getAppWords,
-  getChurchEventList,
-  getUserCellList,
-  getUserChurchList,
-  getUserInfo,
-} from '../utils/apis';
 
 type Props = {};
 
